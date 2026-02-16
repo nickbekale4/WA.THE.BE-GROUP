@@ -1,0 +1,365 @@
+/* --- Variables & Thèmes --- */
+:root {
+    /* --- CORRECTION LISIBILITÉ MODE CLAIR --- */
+    
+    /* 1. On assombrit l'Or pour qu'il soit lisible sur fond blanc */
+    --gold-primary: #b89628; /* Plus foncé que le #D4AF37 original */
+    
+    /* Dégradé ajusté légèrement pour le contraste */
+    --gold-gradient: linear-gradient(135deg, #b89628, #e6d885, #a67c2e, #e3dd9e, #99721c);
+    
+    /* --- Effets Néon (inchangés) --- */
+    --neon-glow-strong: 0 0 5px #D4AF37, 0 0 15px #D4AF37, 0 0 30px #D4AF37, 0 0 60px #D4AF37;
+    --neon-box-glow: 0 0 10px rgba(184, 150, 40, 0.4), inset 0 0 10px rgba(184, 150, 40, 0.1);
+    --text-neon-subtle: 0 0 8px rgba(184, 150, 40, 0.4);
+
+    /* --- Variables de Couleurs (Mode Clair optimisé) --- */
+    --bg-body: #f4f4f4; /* Gris très très léger pour détacher les cartes blanches */
+    
+    /* 2. Fond des cartes : Blanc pur (plus de transparence) pour netteté du texte */
+    --bg-card: #ffffff; 
+    
+    /* 3. Textes plus foncés pour le contraste */
+    --text-primary: #111111; /* Noir quasi total */
+    --text-secondary: #333333; /* Gris foncé (au lieu de gris moyen) */
+    
+    --nav-bg: rgba(255, 255, 255, 0.98); /* Quasi opaque */
+    --border-color: rgba(0,0,0,0.1);
+    
+    /* 4. Ombre plus marquée pour détacher les éléments sur fond clair */
+    --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.15);
+    
+    --backdrop-blur: blur(15px);
+    --hero-overlay: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+}
+
+/* --- Mode Sombre (Luxe Néon & Nuit) --- */
+body.dark-mode {
+    /* On rétablit l'Or Brillant original car il ressort bien sur le noir */
+    --gold-primary: #D4AF37;
+    --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    
+    --bg-body: #080808; 
+    --bg-card: rgba(20, 20, 20, 0.9);
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc; /* Gris clair sur fond noir */
+    --nav-bg: rgba(10, 10, 10, 0.95);
+    --border-color: rgba(212, 175, 55, 0.15);
+    --shadow-soft: 0 20px 50px -10px rgba(0, 0, 0, 0.8);
+    --hero-overlay: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.9));
+}
+
+/* --- Reset & Global --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+/* Fluidité du chargement de page */
+body { opacity: 0; transition: opacity 0.5s ease-in-out; }
+body.loaded { opacity: 1; }
+
+body { 
+    font-family: 'Open Sans', sans-serif; line-height: 1.7; 
+    background-color: var(--bg-body); color: var(--text-primary); 
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+ul { list-style: none; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.section-padding { padding: 120px 0; }
+.text-gold { color: var(--gold-primary); }
+
+/* Typographie & Effets Néon Généraux */
+h1, h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; letter-spacing: 1px; }
+
+/* Classe utilitaire pour l'effet Néon sur le texte (surtout en dark mode) */
+.dark-mode .neon-text { text-shadow: var(--text-neon-subtle); }
+/* Classe utilitaire pour l'effet Néon sur les boites/boutons */
+.neon-box { box-shadow: var(--neon-box-glow); border: 1px solid var(--gold-primary); }
+
+.section-title { text-align: center; margin-bottom: 80px; }
+.section-title h2 { 
+    font-size: 3rem; text-transform: uppercase; margin-bottom: 20px;
+    background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.line { 
+    width: 100px; height: 4px; background: var(--gold-primary); margin: 0 auto; 
+}
+
+/* --- Header Intéractif --- */
+header { 
+    background: var(--nav-bg); 
+    backdrop-filter: var(--backdrop-blur); -webkit-backdrop-filter: var(--backdrop-blur);
+    border-bottom: 1px solid var(--border-color);
+    position: fixed; width: 100%; top: 0; z-index: 1000; 
+    transition: all 0.4s ease; padding: 10px 0;
+}
+
+.nav-container { display: flex; justify-content: space-between; align-items: center; }
+
+/* Styles du Logo */
+.logo a { text-decoration: none; color: inherit; }
+
+.header-logo {
+    height: 50px; 
+    width: auto;
+    object-fit: contain;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.logo:hover .header-logo { transform: scale(1.1); box-shadow: 0 0 15px var(--gold-primary); }
+.logo h1 { font-size: 1.4rem; margin-left: 10px; display: inline-block;}
+
+
+.nav-links { display: flex; gap: 30px; align-items: center; }
+.nav-links a { 
+    font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; position: relative; padding: 5px 0;
+}
+.nav-links a::after {
+    content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; 
+    background: var(--gold-primary); transition: width 0.3s ease;
+    box-shadow: 0 0 5px var(--gold-primary);
+}
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.nav-links a:hover { color: var(--gold-primary); text-shadow: 0 0 5px rgba(212, 175, 55, 0.5); }
+
+
+/* Sélecteur de Langue */
+.lang-switcher { display: flex; gap: 10px; align-items: center; font-size: 0.8rem; font-weight: 700; margin-left: 15px; }
+.lang-btn { opacity: 0.5; transition: 0.3s; cursor: pointer; }
+.lang-btn:hover, .lang-btn.active { opacity: 1; color: var(--gold-primary); }
+.lang-btn.active { text-shadow: 0 0 10px var(--gold-primary); }
+
+
+/* --- Hero Section Animée & Néon --- */
+.hero { 
+    height: 100vh; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; padding-top: 80px;
+}
+
+/* Arrière-plan avec Zoom lent (Ken Burns effect) */
+.hero-bg {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-size: cover; background-position: center;
+    z-index: -2;
+    animation: kenBurns 20s infinite alternate linear;
+}
+@keyframes kenBurns {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15); }
+}
+
+.hero-overlay {
+    position: absolute; top:0; left:0; width:100%; height:100%;
+    background: var(--hero-overlay); z-index: -1;
+}
+.hero-content { position: relative; z-index: 2; max-width: 900px;}
+
+.hero h2 { 
+    font-size: 3.5rem; margin-bottom: 10px; line-height: 1.1;
+    /* Effet Néon sur le titre principal en permanence dans le Hero sombre */
+    text-shadow: 0 0 10px rgba(255,255,255,0.3), 0 0 20px rgba(255,255,255,0.2);
+}
+.hero h3 { 
+    font-size: 1.5rem; font-weight: 400; margin-bottom: 40px; color: var(--gold-primary);
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+}
+
+.quote-box { 
+    font-size: 1.2rem; font-style: italic; margin-bottom: 50px; position: relative; display: inline-block; padding: 0 40px;
+}
+.quote-icon { position: absolute; top: -15px; left: 0; font-size: 1.5rem; opacity: 0.8; }
+.quote-author { display: block; margin-top: 15px; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;}
+
+/* Boutons Néon Interactifs */
+.hero-btns { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+
+.btn-main, .btn-secondary {
+    padding: 15px 40px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    border-radius: 4px; position: relative; overflow: hidden; z-index: 1;
+    transition: all 0.4s ease; font-size: 0.9rem;
+    display: inline-block; cursor: pointer;
+}
+
+/* Bouton Principal (Plein) */
+.btn-main { 
+    background: var(--gold-gradient); color: #000; border: none;
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+.btn-main.btn-neon:hover { 
+    transform: translateY(-5px) scale(1.05); 
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6), 0 0 20px var(--gold-primary);
+}
+
+/* Bouton Secondaire (Contour Néon) */
+.btn-secondary {
+    background: transparent; color: var(--gold-primary);
+    border: 2px solid var(--gold-primary);
+    box-shadow: inset 0 0 5px rgba(212, 175, 55, 0.2);
+}
+.btn-secondary.btn-neon:hover {
+    background: rgba(212, 175, 55, 0.1);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5), inset 0 0 10px rgba(212, 175, 55, 0.3);
+    transform: translateY(-5px); color: #fff;
+    text-shadow: 0 0 5px var(--gold-primary);
+}
+
+/* --- Cartes Néon --- */
+.grid-box.three-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+
+.card { 
+    background: var(--bg-card); padding: 50px 30px; text-align: left; 
+    border: 1px solid var(--border-color); border-radius: 4px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative; overflow: hidden;
+}
+
+.card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%;
+    background: var(--gold-gradient); transform: scaleY(0); transform-origin: bottom; transition: transform 0.5s ease;
+}
+
+.card.neon-card:hover { 
+    transform: translateY(-10px); 
+    border-color: var(--gold-primary);
+    box-shadow: var(--neon-box-glow), var(--shadow-soft);
+}
+.card:hover::before { transform: scaleY(1); }
+
+.card i { 
+    font-size: 3rem; color: var(--gold-primary); margin-bottom: 25px; display: inline-block;
+    transition: 0.5s ease;
+    /* Lueur subtile sur l'icône */
+    filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.3));
+}
+.card:hover i { transform: scale(1.1) rotate(10deg); filter: drop-shadow(0 0 10px var(--gold-primary)); }
+
+/* --- Bouton WhatsApp Flottant (DROITE) --- */
+.whatsapp-float {
+    position: fixed; bottom: 30px; right: 30px;
+    width: 60px; height: 60px;
+    background: #25d366; color: #fff;
+    border-radius: 50%; text-align: center; font-size: 30px;
+    z-index: 100; display: flex; align-items: center; justify-content: center;
+    border: 2px solid #20ba5a;
+    /* Animation de pulsation constante */
+    animation: pulseWA 2s infinite;
+    transition: 0.3s;
+}
+
+@keyframes pulseWA {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+.whatsapp-float:hover { transform: scale(1.1); background: #20ba5a; }
+
+/* --- Bouton Thème Flottant (GAUCHE) --- */
+.theme-float {
+    position: fixed;
+    bottom: 30px;
+    left: 30px; /* Gauche */
+    width: 50px; 
+    height: 50px;
+    background: var(--bg-card); /* Fond semi-transparent */
+    backdrop-filter: blur(5px);
+    border: 2px solid var(--gold-primary); 
+    color: var(--text-primary);
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer; 
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    z-index: 1000;
+    font-size: 1.2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.theme-float:hover { 
+    transform: rotate(360deg) scale(1.1); 
+    background: var(--gold-primary);
+    color: #000;
+    box-shadow: 0 0 20px var(--gold-primary);
+}
+
+
+/* --- Footer --- */
+footer { background: #050505; color: #888; padding: 50px 0; text-align: center; border-top: 1px solid rgba(212, 175, 55, 0.2); }
+
+/* --- Burger et Mobile --- */
+.burger { display: none; cursor: pointer; z-index: 1001; }
+.burger div { width: 30px; height: 3px; background-color: var(--text-primary); margin: 5px; transition: 0.4s; border-radius: 2px;}
+.dark-mode .burger div { background-color: var(--gold-primary); box-shadow: 0 0 5px var(--gold-primary); }
+
+@media screen and (max-width: 992px) {
+    .nav-links { 
+        position: fixed; right: 0; height: 100vh; top: 0; 
+        background: var(--bg-body); 
+        /* Ajout d'un fond style verre pour le menu mobile aussi */
+        backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        flex-direction: column; justify-content: center; 
+        width: 70%; max-width: 400px;
+        transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0); 
+        box-shadow: -10px 0 30px rgba(0,0,0,0.5); z-index: 1000;
+        border-left: 1px solid var(--border-color);
+    }
+    .nav-links li { opacity: 0; margin: 15px 0; } /* Caché par défaut pour l'animation */
+    .burger { display: block; }
+    .nav-active { transform: translateX(0%); }
+    
+    .hero h2 { font-size: 2.2rem; }
+    .hero h3 { font-size: 1.2rem; }
+    .grid-box.three-cols { grid-template-columns: 1fr; }
+
+    /* Ajustement Mobile pour les boutons flottants */
+    .theme-float {
+        bottom: 20px; left: 20px;
+        width: 45px; height: 45px;
+        font-size: 1rem;
+    }
+    .whatsapp-float {
+        bottom: 20px; right: 20px;
+        width: 50px; height: 50px;
+        font-size: 24px;
+    }
+}
+
+/* Animation Croix Burger */
+.toggle .line1 { transform: rotate(-45deg) translate(-6px, 6px); background: var(--gold-primary); }
+.toggle .line2 { opacity: 0; }
+.toggle .line3 { transform: rotate(45deg) translate(-6px, -6px); background: var(--gold-primary); }
+
+/* Animation liens menu mobile */
+@keyframes navLinkFade {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* --- AMÉLIORATION : Header au Scroll --- */
+/* État "Scrolled" (ajouté par JS quand on descend > 50px) */
+header.header-scrolled {
+    padding: 5px 0; /* On réduit un peu la hauteur pour gagner de la place */
+    background: rgba(255, 255, 255, 0.98); /* Presque opaque en mode clair */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1); /* Ombre plus marquée */
+}
+
+/* Version Mode Sombre */
+body.dark-mode header.header-scrolled {
+    background: rgba(10, 10, 10, 0.98); /* Presque opaque en mode sombre */
+    border-bottom: 1px solid var(--gold-primary); /* Ligne dorée qui apparait */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+}
+
+/* --- Animation Transition Langue --- */
+body {
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;
+}
+
+body.lang-changing {
+    opacity: 0; /* La page devient transparente pendant le changement */
+}

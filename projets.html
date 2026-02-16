@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="icon" href="logo.jpeg" type="image/jpeg">
+    
+    <title data-lang="fr">Nos Réalisations - WA.THE.BE GROUP</title>
+    <title data-lang="en" style="display:none;">Our Portfolio - WA.THE.BE GROUP</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Teko:wght@300;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Police Technique Condensée */
+        .tech-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* Fond Sombre Uni */
+        .gallery-bg {
+            background-color: #050505;
+            overflow-x: hidden; /* Important pour éviter le scroll horizontal */
+        }
+
+        /* --- HERO SECTION --- */
+        .project-hero {
+            padding: 150px 0 50px;
+            text-align: center;
+        }
+        .hero-title {
+            font-size: 4rem; margin-bottom: 10px; color: #fff;
+            line-height: 1;
+        }
+        .hero-subtitle {
+            color: var(--gold-primary); letter-spacing: 4px; font-size: 1.2rem;
+            margin-bottom: 40px; display: inline-block;
+            border-bottom: 1px solid var(--gold-primary); padding-bottom: 5px;
+        }
+
+        /* --- ELASTIC GALLERY CONTAINER --- */
+        .elastic-container {
+            display: flex;
+            width: 100%;
+            height: 70vh; /* Hauteur de la galerie */
+            max-width: 1400px;
+            margin: 0 auto 100px;
+            padding: 0 20px;
+            gap: 10px;
+        }
+
+        /* --- ITEM PROJET --- */
+        .elastic-item {
+            position: relative;
+            flex: 1; /* Par défaut, ils prennent tous la même largeur (1 part) */
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: flex 0.7s cubic-bezier(0.25, 1, 0.5, 1); /* Animation fluide */
+            overflow: hidden;
+            filter: grayscale(100%) brightness(0.6); /* Noir et blanc par défaut */
+            border: 1px solid #333;
+        }
+
+        /* --- ÉTAT HOVER (SURVOL) --- */
+        .elastic-item:hover {
+            flex: 7; /* L'élément survolé prend 7 parts (s'agrandit) */
+            filter: grayscale(0%) brightness(1); /* Devient coloré */
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        /* Overlay Sombre en bas */
+        .item-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            padding: 40px;
+            background: linear-gradient(to top, #000 0%, transparent 100%);
+            opacity: 0; /* Caché par défaut */
+            transform: translateY(20px);
+            transition: all 0.5s ease 0.2s; /* Petit délai */
+            display: flex; flex-direction: column; justify-content: flex-end;
+        }
+
+        /* On affiche le texte uniquement quand l'item est agrandi */
+        .elastic-item:hover .item-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Typographie Contenu */
+        .project-num {
+            font-size: 4rem; color: rgba(255,255,255,0.1);
+            font-weight: 900; line-height: 1;
+            position: absolute; top: 20px; right: 20px;
+            transition: 0.5s;
+        }
+        .elastic-item:hover .project-num {
+            color: var(--gold-primary); opacity: 1;
+        }
+
+        .project-cat {
+            color: var(--gold-primary); font-size: 1.2rem; margin-bottom: 5px;
+        }
+        .project-name {
+            color: #fff; font-size: 3rem; margin-bottom: 15px; line-height: 1;
+        }
+        .project-desc {
+            color: #ccc; font-family: 'Open Sans', sans-serif;
+            font-size: 1rem; max-width: 500px; margin-bottom: 20px;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+
+        /* Bouton Details */
+        .btn-view {
+            display: inline-block;
+            padding: 10px 30px;
+            border: 1px solid #fff;
+            color: #fff; text-transform: uppercase; font-weight: bold;
+            align-self: flex-start;
+            transition: 0.3s;
+        }
+        .btn-view:hover {
+            background: var(--gold-primary); border-color: var(--gold-primary); color: #000;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 992px) {
+            .elastic-container {
+                flex-direction: column; /* On empile sur mobile */
+                height: auto;
+                gap: 20px;
+            }
+            .elastic-item {
+                height: 400px; /* Hauteur fixe par carte */
+                flex: none; /* Désactive l'effet accordéon complexe sur mobile */
+                filter: grayscale(0%) brightness(0.8); /* Toujours coloré sur mobile */
+            }
+            .elastic-item:hover { transform: scale(1.02); }
+            .item-overlay { opacity: 1; transform: translateY(0); } /* Texte toujours visible */
+            .project-name { font-size: 2rem; }
+            .project-num { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body class="loading gallery-bg">
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="index.html" style="display: flex; align-items: center; gap: 15px;">
+                    <img src="logo.jpeg" alt="Logo WA.THE.BE" class="header-logo">
+                    <h1>W.A.THE.BE <span class="text-gold neon-text">GROUP</span></h1>
+                </a>
+            </div>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html"><span data-lang="fr">Accueil</span><span data-lang="en" style="display:none">Home</span></a></li>
+                    <li><a href="a-propos.html"><span data-lang="fr">À Propos</span><span data-lang="en" style="display:none">About</span></a></li>
+                    <li><a href="services.html"><span data-lang="fr">Services</span><span data-lang="en" style="display:none">Services</span></a></li>
+                    <li><a href="formation.html"><span data-lang="fr">Formation</span><span data-lang="en" style="display:none">Training</span></a></li>
+                    <li><a href="projets.html" class="active"><span data-lang="fr">Projets</span><span data-lang="en" style="display:none">Projects</span></a></li>
+                    <li><a href="contact.html"><span data-lang="fr">Contact</span><span data-lang="en" style="display:none">Contact</span></a></li>
+                    
+                    <li class="lang-switcher">
+                        <a href="#" id="lang-fr" class="lang-btn active">FR</a>
+                        <span style="color:var(--gold-primary)">|</span>
+                        <a href="#" id="lang-en" class="lang-btn">EN</a>
+                    </li>
+                </ul>
+                <div class="burger"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="project-hero">
+        <div class="container">
+            <span class="hero-subtitle tech-font" data-aos="fade-down">PORTFOLIO EXCLUSIF</span>
+            <h2 class="hero-title neon-text tech-font" data-aos="zoom-in">
+                <span data-lang="fr">NOS SIGNATURES</span>
+                <span data-lang="en" style="display:none;">OUR SIGNATURES</span>
+            </h2>
+            <p style="color: #888; margin-top: 10px;">
+                <span data-lang="fr">Passez votre souris sur les projets pour les explorer.</span>
+                <span data-lang="en" style="display:none;">Hover over projects to explore them.</span>
+            </p>
+        </div>
+    </section>
+
+    <div class="elastic-container" data-aos="fade-up">
+        
+        <div class="elastic-item" style="background-image: url('https://images.unsplash.com/photo-1600596542815-2a429dbf846c?auto=format&fit=crop&w=1200&q=80');">
+            <div class="project-num tech-font">01</div>
+            <div class="item-overlay">
+                <span class="project-cat tech-font">RÉSIDENTIEL</span>
+                <h3 class="project-name tech-font">VILLA EKIÉ</h3>
+                <p class="project-desc">Une résidence de prestige alliant domotique avancée, sécurité et design minimaliste. Un havre de paix au cœur de Yaoundé.</p>
+                <a href="contact.html" class="btn-view">CONTACTER</a>
+            </div>
+        </div>
+
+        <div class="elastic-item" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80');">
+            <div class="project-num tech-font">02</div>
+            <div class="item-overlay">
+                <span class="project-cat tech-font">COMMERCIAL</span>
+                <h3 class="project-name tech-font">TOWER CENTER</h3>
+                <p class="project-desc">Complexe de bureaux R+15 avec façade en verre bioclimatique. Le nouveau symbole économique de Douala.</p>
+                <a href="contact.html" class="btn-view">CONTACTER</a>
+            </div>
+        </div>
+
+        <div class="elastic-item" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80');">
+            <div class="project-num tech-font">03</div>
+            <div class="item-overlay">
+                <span class="project-cat tech-font">CULTUREL</span>
+                <h3 class="project-name tech-font">MUSÉE DES ARTS</h3>
+                <p class="project-desc">Espace polyvalent de 2000m² dédié à l'art camerounais. Structure en acier et bois locaux.</p>
+                <a href="contact.html" class="btn-view">CONTACTER</a>
+            </div>
+        </div>
+
+        <div class="elastic-item" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80');">
+            <div class="project-num tech-font">04</div>
+            <div class="item-overlay">
+                <span class="project-cat tech-font">ÉCOLOGIQUE</span>
+                <h3 class="project-name tech-font">GREEN HOME</h3>
+                <p class="project-desc">Le futur de l'habitat durable. Zéro émission carbone, panneaux solaires intégrés et récupération d'eau.</p>
+                <a href="contact.html" class="btn-view">CONTACTER</a>
+            </div>
+        </div>
+
+        <div class="elastic-item" style="background-image: url('https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1200&q=80');">
+            <div class="project-num tech-font">05</div>
+            <div class="item-overlay">
+                <span class="project-cat tech-font">RENOVATION</span>
+                <h3 class="project-name tech-font">LOFT INDUSTRIEL</h3>
+                <p class="project-desc">Transformation d'un ancien entrepôt en espace de vie luxueux et moderne. Conservation de l'âme du bâtiment.</p>
+                <a href="contact.html" class="btn-view">CONTACTER</a>
+            </div>
+        </div>
+
+    </div>
+
+    <button id="theme-toggle" class="theme-float neon-box" aria-label="Changer le thème">
+        <i class="fas fa-moon"></i>
+    </button>
+    <a href="https://wa.me/237676541711" target="_blank" class="whatsapp-float neon-box" aria-label="Contact WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        <div class="container">
+            <p id="copyright"></p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
